@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GlassdoorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Company_ID" />
+          </Key>
+          <Property Name="Company_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comapncy_Name" Type="varchar" MaxLength="60" />
+          <Property Name="HQ_City" Type="varchar" MaxLength="30" />
+          <Property Name="Sector" Type="varchar" MaxLength="20" />
+          <Property Name="Total_Employees" Type="int" />
+          <Property Name="Annual_Revenue" Type="int" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="Job_ID" />
+          </Key>
+          <Property Name="Job_ID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="30" />
+          <Property Name="Job_Description" Type="varchar" MaxLength="400" />
+          <Property Name="Date_Posted" Type="datetime" />
+          <Property Name="Job_Status" Type="varchar" MaxLength="10" />
+          <Property Name="Company_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="400" />
+          <Property Name="Date_Created" Type="datetime" />
+          <Property Name="User_ID" Type="int" />
+          <Property Name="Job_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="User_P">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="30" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="30" />
+          <Property Name="E_mail" Type="varchar" MaxLength="30" />
+          <Property Name="Phone_Number" Type="int" />
+          <Property Name="date_created" Type="datetime" />
+          <Property Name="Password" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK__Job__Company_ID__267ABA7A">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Company_ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="Company_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__Job_ID__2C3393D0">
+          <End Role="Job" Type="Self.Job" Multiplicity="0..1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Job_ID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="Job_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__User_ID__2B3F6F97">
+          <End Role="User_P" Type="Self.User_P" Multiplicity="0..1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_P">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GlassdoorModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_P" EntityType="Self.User_P" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Job__Company_ID__267ABA7A" Association="Self.FK__Job__Company_ID__267ABA7A">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Job" EntitySet="Job" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__Job_ID__2C3393D0" Association="Self.FK__Review__Job_ID__2C3393D0">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__User_ID__2B3F6F97" Association="Self.FK__Review__User_ID__2B3F6F97">
+            <End Role="User_P" EntitySet="User_P" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GlassdoorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="Company_ID" />
+          </Key>
+          <Property Name="Company_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comapncy_Name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="HQ_City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Sector" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Total_Employees" Type="Int32" />
+          <Property Name="Annual_Revenue" Type="Int32" />
+          <NavigationProperty Name="Jobs" Relationship="Self.FK__Job__Company_ID__267ABA7A" FromRole="Company" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="Job_ID" />
+          </Key>
+          <Property Name="Job_ID" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Job_Description" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Posted" Type="DateTime" Precision="3" />
+          <Property Name="Job_Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Company_ID" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Job__Company_ID__267ABA7A" FromRole="Job" ToRole="Company" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__Job_ID__2C3393D0" FromRole="Job" ToRole="Review" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Date_Created" Type="DateTime" Precision="3" />
+          <Property Name="User_ID" Type="Int32" />
+          <Property Name="Job_ID" Type="Int32" />
+          <NavigationProperty Name="Job" Relationship="Self.FK__Review__Job_ID__2C3393D0" FromRole="Review" ToRole="Job" />
+          <NavigationProperty Name="User_P" Relationship="Self.FK__Review__User_ID__2B3F6F97" FromRole="Review" ToRole="User_P" />
+        </EntityType>
+        <EntityType Name="User_P">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="E_mail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Phone_Number" Type="Int32" />
+          <Property Name="date_created" Type="DateTime" Precision="3" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK__Review__User_ID__2B3F6F97" FromRole="User_P" ToRole="Review" />
+        </EntityType>
+        <Association Name="FK__Job__Company_ID__267ABA7A">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Job" Type="Self.Job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="Company_ID" />
+            </Principal>
+            <Dependent Role="Job">
+              <PropertyRef Name="Company_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__Job_ID__2C3393D0">
+          <End Role="Job" Type="Self.Job" Multiplicity="0..1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Job_ID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="Job_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Review__User_ID__2B3F6F97">
+          <End Role="User_P" Type="Self.User_P" Multiplicity="0..1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_P">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="User_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GlassdoorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Jobs" EntityType="Self.Job" />
+          <EntitySet Name="Reviews" EntityType="Self.Review" />
+          <EntitySet Name="User_P" EntityType="Self.User_P" />
+          <AssociationSet Name="FK__Job__Company_ID__267ABA7A" Association="Self.FK__Job__Company_ID__267ABA7A">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Job" EntitySet="Jobs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__Job_ID__2C3393D0" Association="Self.FK__Review__Job_ID__2C3393D0">
+            <End Role="Job" EntitySet="Jobs" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Review__User_ID__2B3F6F97" Association="Self.FK__Review__User_ID__2B3F6F97">
+            <End Role="User_P" EntitySet="User_P" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GlassdoorModelStoreContainer" CdmEntityContainer="GlassdoorEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="GlassdoorModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+                <ScalarProperty Name="Comapncy_Name" ColumnName="Comapncy_Name" />
+                <ScalarProperty Name="HQ_City" ColumnName="HQ_City" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="Total_Employees" ColumnName="Total_Employees" />
+                <ScalarProperty Name="Annual_Revenue" ColumnName="Annual_Revenue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jobs">
+            <EntityTypeMapping TypeName="GlassdoorModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="Job_ID" ColumnName="Job_ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Job_Description" ColumnName="Job_Description" />
+                <ScalarProperty Name="Date_Posted" ColumnName="Date_Posted" />
+                <ScalarProperty Name="Job_Status" ColumnName="Job_Status" />
+                <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="GlassdoorModel.Review">
+              <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Date_Created" ColumnName="Date_Created" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="Job_ID" ColumnName="Job_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_P">
+            <EntityTypeMapping TypeName="GlassdoorModel.User_P">
+              <MappingFragment StoreEntitySet="User_P">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="E_mail" ColumnName="E_mail" />
+                <ScalarProperty Name="Phone_Number" ColumnName="Phone_Number" />
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
